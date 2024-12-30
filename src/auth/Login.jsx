@@ -22,9 +22,9 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { postLoginMember } from '../apis/api/member';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ email: 'email', password: 'password' });
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   // const login = useAuthStore( state => state.login );
@@ -92,7 +92,7 @@ const Login = () => {
                     email: e.target.value,
                   })
                 }
-                placeholder="name@email.com"
+                placeholder="이메일을 입력하세요"
               />
             </FormControl>
 
@@ -105,7 +105,7 @@ const Login = () => {
                 <Input
                   id="password"
                   name="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? 'password' : 'text'}
                   autoComplete="current-password" // Q
                   required
                   value={credentials.password}
