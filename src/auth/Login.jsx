@@ -37,13 +37,16 @@ const Login = () => {
     setIsLoading(true);
 
     const userInfo = {
-      memberId: 1,
       memberName: credentials.email,
       memberPassword: credentials.password,
     };
 
     postLoginMember(userInfo)
       .then((res) => {
+
+        localStorage.setItem('token', res.data);
+        console.log("data :", res.data.token);
+        console.log("Token:", localStorage.getItem('token'));
 
         toast({
           title: '로그인 성공',
