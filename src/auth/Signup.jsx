@@ -10,6 +10,8 @@ import {
   Heading,
   Input,
   Stack,
+  VStack,
+  Text,
   useToast,
   InputGroup,
   InputRightElement,
@@ -18,6 +20,9 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { postSignupMember } from '../apis/api/member';
+
+import { AuthContainer } from '../components/Auth/AuthContainer';
+
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -63,21 +68,16 @@ const Signup = () => {
   };
 
   return (
-    <Container maxW="lg">
-      {/* Header */}
-      <Stack spacing="12" padding="5">
-        <Stack spacing="10" textAlign="center">
-        <Heading textAlign="center">Ziczic</Heading>
-        </Stack>
-      </Stack>
+    <AuthContainer>
+      <VStack spacing={8} p={8} bg="gray.400" borderRadius="lg" boxShadow="lg"  minH="500px" maxH="500px" maxW="400px" w="90%">
+        <Heading size="lg" color="purple.600">Welcome Back</Heading>
+        <Text color="gray.600">Join us</Text>
 
-      {/*  Input */}
-      <Box aria-label="register form">
+      {/* <VStack spacing={4} w="100%"> */}
         <form onSubmit={handleSubmit}>
-          <Stack spacing="6">
             {/* 이메일 */}
             <FormControl isRequired>
-              <FormLabel htmlFor="email">이메일</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 id="email"
                 type="email"
@@ -95,7 +95,10 @@ const Signup = () => {
 
             {/* 비밀번호 */}
             <FormControl isRequired>
-              <FormLabel htmlFor="password">비밀번호</FormLabel>
+              <FormLabel htmlFor="password">
+                Password
+                <VisuallyHidden>(필수)</VisuallyHidden>
+              </FormLabel>
               <InputGroup>
                 <Input
                   id="password"
@@ -121,13 +124,13 @@ const Signup = () => {
             </FormControl>
 
             {/* Button */}
-            <Button type="submit" size="lg" fontSize="md" isLoading={isLoading} loadingText="회원가입 중...">
+            <Button type="submit" colorScheme="purple" size="lg" w="100%" mt={4} isLoading={isLoading} loadingText="회원가입 중...">
               회원가입
             </Button>
-          </Stack>
-        </form>
-      </Box>
-    </Container>
+          </form>
+        </VStack>
+        {/* </VStack> */}
+        </AuthContainer>
   );
 };
 

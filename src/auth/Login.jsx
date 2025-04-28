@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import useAuthStore / store
+import { useAuthStore } from '../store/useAuth';
 
 import {
   Box,
@@ -11,6 +11,7 @@ import {
   Heading,
   Input,
   Stack,
+  VStack,
   Text,
   useToast,
   InputGroup,
@@ -21,13 +22,15 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { postLoginMember } from '../apis/api/member';
 
+import { AuthContainer } from '../components/Auth/AuthContainer';
+
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
 
   const [showPassword, setShowPassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
-  // const login = useAuthStore( state => state.login );
+  const setMember = useAuthStore((state)=>state.setMember);
+  const clearMember = useAuthStore((state)=>state.clearMember);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -43,10 +46,10 @@ const Login = () => {
 
     postLoginMember(userInfo)
       .then((res) => {
+        const accessToken = res.headers.authorization.split(' ')[1];
 
-        localStorage.setItem('token', res.data);
-        console.log("data :", res.data.token);
-        console.log("Token:", localStorage.getItem('token'));
+        localStorage.setItem('token', accessToken);
+        setMember(res.data, accessToken);
 
         toast({
           title: '로그인 성공',
@@ -64,25 +67,23 @@ const Login = () => {
           duration: 2500,
           isClosable: true,
         });
+
+        navigate('/login');
       });
     setIsLoading(false);
-    navigate('/');
+    navigate('/ziczic/main');
   };
 
   return (
-    <Container maxW="lg">
-      {/* Header */}
-      <Stack spacing="12" padding="5">
-        <Stack spacing="10" textAlign="center">
-          <Heading textAlign="center">Ziczic</Heading>
-        </Stack>
-      </Stack>
-
-      <Box aria-label="login form">
+    <AuthContainer>
+      <VStack spacing={8} p={8} bg="gray.50 "borderRadius="lg" boxShadow="lg" minH="500px" maxH="500px" maxW="400px" w="90%">
+        <Heading size="lg" color="purple.600">Welcome Back</Heading>
+        <Text color="gray.800">Login to your account</Text>
+   
+      {/* <VStack spacing={4} w="100%"> */}
         <form onSubmit={handleSubmit}>
-          <Stack spacing="6">
             <FormControl isRequired>
-              <FormLabel htmlFor="email">이메일</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 id="email"
                 type="email"
@@ -101,7 +102,7 @@ const Login = () => {
 
             <FormControl isRequired>
               <FormLabel htmlFor="password">
-                비밀번호
+                Password
                 <VisuallyHidden>(필수)</VisuallyHidden>
               </FormLabel>
               <InputGroup>
@@ -131,10 +132,9 @@ const Login = () => {
               </InputGroup>
             </FormControl>
 
-            <Button type="submit" size="lg" fontSize="md" isLoading={isLoading} loadingText="로그인 중...">
+            <Button type="submit" colorScheme="purple" size="lg" w="100%" mt={4} isLoading={isLoading} loadingText="로그인 중...">
               로그인
             </Button>
-          </Stack>
         </form>
 
         <Stack spacing="1" textAlign="center">
@@ -152,8 +152,10 @@ const Login = () => {
             </Button>
           </Text>
         </Stack>
-      </Box>
-    </Container>
+      {/* </VStack> */}
+
+      </VStack>
+</AuthContainer>
   );
 };
 
