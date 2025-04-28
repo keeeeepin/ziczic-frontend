@@ -4,9 +4,9 @@ import WorkspaceList from '../components/Workspace/WorkspaceList';
 import GlobalMenuBar from '../components/shared/GlobalMenuBar';
 import FriendPage from '../pages/FriendPage';
 
-import { Box } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ReactNode, useCallback } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../apis/queryKeys';
@@ -16,69 +16,51 @@ import { Client } from '@stomp/stompjs'; // Stomp 대신 Client import
 import WorkspacePage from '../pages/WorkspacePage';
 import WorkspaceBar from '../components/Workspace/WorkspaceBar';
 
-import useSubscribe from '../hooks/useSubscribe';
+import useWorkSpaceSubscribe from '../hooks/useWorkSpaceSubscribe';
+import useSocketClientStore from '../store/useSocketClientStore';
+
+import useSocketConnection from '../hooks/useSocketConnection';
+import SideBar from '../components/SideBar/SideBar';
+import UserProfile from '../components/Auth/UserProfile';
 
 const MainRouter = () => {
+  // const [sideBar, setSideBar] = useState(<SideBar />);
+  const [sideBar, setSideBar] = useState(<div>Loading ..</div>);
 
-  const [sideBar, setSideBar] = useState(null);
-  const stompClient = useRef(null);
-
-  const { data: workspaceList} = useQuery({
-    queryKey: QUERY_KEYS.WORKSPACES,
-    queryFn: getWorkspaceList,
-    select: (resp) => resp.data
-  });
-
-  // websocket 연결 설정
-  const connect = () => {
-    const client = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
-      connectHeaders: {},
-
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-
-      onConnect: function () {
-        console.log('Connected!');
-      },
-      onDisconnect: function () {
-        console.log('Disconnected!');
-      },
-      onStompError: function (frame) {
-        console.log('Error: ' + frame.headers['message']);
-        console.log('Details: ' + frame.body);
-      },
-    });
-
-    client.activate();
-    stompClient.current = client;
-  };
-
-  useEffect(() => {
-    connect();
+  const handleSideBar = useCallback((Component, workspaceId) => {
+    console.log('Main Router Workspace Id : ', workspaceId);
+    setSideBar(<Component spaceId={workspaceId} />);
   }, []);
 
-  // workspaces subscribe 
-  useSubscribe(workspaceList);
+  const stompClient = useRef(null);
+  const { setClient, setIsConnected } = useSocketClientStore();
 
+  const { data: workspaces } = useQuery({
+    queryKey: QUERY_KEYS.WORKSPACES,
+    queryFn: getWorkspaceList,
+    select: (resp) => {
+      console.log('resp data :', resp.data);
+      // return resp.data;
+    },
+  });
+
+  useSocketConnection();
+  // useWorkSpaceSubscribe(workspaces);
 
   return (
     <Box display={'flex'}>
-    {/* <Box> */}
       <WorkspaceList />
-      <Box>
-      {sideBar}
-      </Box>
-      {/* <GlobalMenuBar /> */}
 
+      <VStack align="stretch" spacing={1} bg="#2B2D31" userSelect="none" w="200px" minW="200px">
+        {sideBar}
+        <UserProfile />
+      </VStack>
       <Routes>
         <Route path={'/main'} element={<FriendPage />} />
-        <Route path={'/channel/:workspaceId/:channelId'} element={<WorkspacePage setSideBar={setSideBar} />} />
+        <Route path={'/:workspaceId'} element={<WorkspacePage setSideBar={setSideBar} />} />
       </Routes>
-      
     </Box>
-  )
-}
+  );
+};
 
-export default MainRouter; 
+export default MainRouter;

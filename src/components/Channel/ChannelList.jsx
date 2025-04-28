@@ -1,51 +1,55 @@
-import { HStack, Box, VStack, Circle, Text} from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { HStack, Box, VStack, Circle, Text } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import Channel from './Channel';
 
 import { getChannelList } from '../../apis/api/channel';
 
-const ChannelList = () => {
+import { Link } from 'react-router-dom';
 
-  const [channelList, setChannelList] = useState([{
-    "id": 1, 
-    "name": "test"
-  }]);
+const ChannelList = ({ workspaceId }) => {
+  const [channelList, setChannelList] = useState([
+    {
+      id: 1,
+      name: 'test',
+    },
+  ]);
 
   useEffect(() => {
-    // channel list 조회 API 
+    // channel list 조회 API
     const workspaceId = {
-      workspaceId: 1
+      workspaceId: 1,
     };
 
     getChannelList(workspaceId)
-    .then((res) => {
-      console.log("success");
+      .then((res) => {
+        console.log('channelList Load success');
 
-      setChannelList(res.data);
-    })
-    .catch((err) => {
-      console.log(err.data); 
-    });
-  }, [])
-  
+        setChannelList(res.data);
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  }, []);
 
   return (
-    <>
-      {channelList.map((channel) => (
-        <Channel key={channel.id} name={channel.name} />
-      ))}
-      <Circle
-        size="30px"
-        bg="gray.300"
-        color="gray.600"
+    <VStack align="stretch" p={4} spacing={1} color="white">
+      <Box
+        display="flex"
+        alignItems="center"
+        h="26px"
+        px={2}
+        color="#9F9FA0"
+        _hover={{ color: 'white' }}
         cursor="pointer"
-        _hover={{bg: 'gray.500'}}
-        >
-        <AddIcon boxSize={3} />
-      </Circle>
-    </>
-  )
-}
+      >
+        {channelList.map((channel) => (
+          <Link key={channel.id} to={`/workspace/1/channel/${channel.id}`}>
+            <Channel onClick={() => console.log()} key={channel.id} id={channel.id} name={channel.name} />
+          </Link>
+        ))}
+      </Box>
+    </VStack>
+  );
+};
 
-export default ChannelList
+export default ChannelList;

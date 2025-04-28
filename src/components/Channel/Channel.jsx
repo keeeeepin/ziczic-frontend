@@ -1,17 +1,27 @@
-import { Circle, VStack, Text, HStack, Box } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react';
+import ChatArea from '../Chat/ChatContainer';
 
-const Channel = ({name}) => {
+const Channel = ({ id, name }) => {
   return (
-    <Circle
-      size="30px"
-      bg="gray.300"
-      color="gray.600"
-      cursor="pointer"
-      _hover={{bg: 'gray.500'}}
+    <>
+      <Box
+        display="flex"
+        alignItems="center"
+        h="26px"
+        px={2}
+        borderRadius="4px"
+        _hover={{ bg: '#27242C' }}
+        cursor="pointer"
       >
-    {name}
-    </Circle>
-  )
-}
+        <Text fontSize="lg" mr={2} color="#9F9FA0">
+          #
+        </Text>
+        <Text fontSize="sm" color="#9F9FA0">
+          {name}
+        </Text>
+      </Box>
+    </>
+  );
+};
 
-export default Channel
+export default Channel;

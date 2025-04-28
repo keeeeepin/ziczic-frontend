@@ -1,9 +1,10 @@
-import { defaultApiInstance } from "../utils";
+import { defaultApiInstance } from '../utils';
 
 export const postCreateChannel = async (channelInfo) => {
-    return await defaultApiInstance.post("/channel", {channelInfo});
+  return await defaultApiInstance.post('/channel', channelInfo);
 };
 
-export const getChannelList = async ( {workspaceId} ) => {
-    return await defaultApiInstance.get(`/channel?workspaceId=${workspaceId}`);
-}
+export const getChannelList = async (workspaceId) => {
+  const resp = await defaultApiInstance.get(`/channel?workspaceId=${workspaceId}`);
+  return resp.data;
+};

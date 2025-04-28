@@ -4,10 +4,6 @@ import Login from './auth/Login.jsx'
 import Signup from './auth/Signup.jsx'
 import Home from './pages/Home.jsx'
 import { Box, ChakraProvider } from '@chakra-ui/react'
-import ChatArea from './components/ChatArea/ChatArea.jsx'
-import WorkspaceList from './components/Workspace/WorkspaceList.jsx'
-
-import SideBar from './components/SideBar/SideBar.jsx'
 
 import Router from './routers/Router.jsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
