@@ -40,11 +40,14 @@ const MainRouter = () => {
     queryFn: getWorkspaceList,
     select: (resp) => {
       console.log('resp data :', resp.data);
-      // return resp.data;
+      return resp.data || [];
     },
+    staleTime: 0,
+    refetchOnMount: true,
+    // refetchOnWindowFocus: true,
   });
 
-  useSocketConnection();
+  // useSocketConnection();
   // useWorkSpaceSubscribe(workspaces);
 
   return (
