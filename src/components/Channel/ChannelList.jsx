@@ -43,9 +43,7 @@ const ChannelList = ({ workspaceId }) => {
         cursor="pointer"
       >
         {channelList.map((channel) => (
-          <Link key={channel.id} to={`/workspace/1/channel/${channel.id}`}>
-            <Channel onClick={() => console.log()} key={channel.id} id={channel.id} name={channel.name} />
-          </Link>
+          <Channel key={channel.id} id={channel.id} name={channel.name} />
         ))}
       </Box>
     </VStack>
