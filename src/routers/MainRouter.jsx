@@ -47,7 +47,7 @@ const MainRouter = () => {
     // refetchOnWindowFocus: true,
   });
 
-  // useSocketConnection();
+  useSocketConnection();
   // useWorkSpaceSubscribe(workspaces);
 
   return (
