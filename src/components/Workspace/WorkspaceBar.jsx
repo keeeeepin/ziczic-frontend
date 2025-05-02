@@ -48,8 +48,6 @@ const WorkspaceBar = ({ workspaceId }) => {
         name: newChannelName.trim(),
       };
 
-      console.log('-- new chnnel name --', newChannel.name);
-      console.log('-- new chnnel name --', workspaceId);
       setChannelList([...channelList, newChannel]);
       setNewChannelName('');
 
@@ -117,17 +115,7 @@ const WorkspaceBar = ({ workspaceId }) => {
       {isChannelVisible && (
         <VStack align="stretch" spacing={1} pl={7}>
           {channelList.map((channel) => (
-            <Box
-              key={channel.id}
-              display="flex"
-              alignItems="center"
-              _hover={{ color: 'white' }}
-              cursor="pointer"
-              fontSize="15px"
-              color="#949BA4"
-            >
-              <Text># {channel.name}</Text>
-            </Box>
+            <Channel id={channel.id} name={channel.name} />
           ))}
         </VStack>
       )}
