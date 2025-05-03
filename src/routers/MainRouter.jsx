@@ -23,6 +23,8 @@ import useSocketConnection from '../hooks/useSocketConnection';
 import SideBar from '../components/SideBar/SideBar';
 import UserProfile from '../components/Auth/UserProfile';
 
+import ExplorePage from '../pages/ExplorePage';
+
 const MainRouter = () => {
   // const [sideBar, setSideBar] = useState(<SideBar />);
   const [sideBar, setSideBar] = useState(<div>Loading ..</div>);
@@ -61,6 +63,7 @@ const MainRouter = () => {
       <Routes>
         <Route path={'/main'} element={<FriendPage />} />
         <Route path={'/:workspaceId'} element={<WorkspacePage setSideBar={setSideBar} />} />
+        <Route path={'/explore'} element={<ExplorePage setSideBar={setSideBar} />} />
       </Routes>
     </Box>
   );
