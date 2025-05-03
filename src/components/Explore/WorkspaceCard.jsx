@@ -32,6 +32,8 @@ const WorkspaceCard = ({ id, workspaceName, createdAt }) => {
         console.log('가입완료');
       })
       .catch((err) => console.log(err));
+
+    onClose();
   };
 
   return (
