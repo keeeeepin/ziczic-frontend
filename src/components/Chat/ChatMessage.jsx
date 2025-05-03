@@ -1,5 +1,7 @@
 import { HStack, Box, Text } from '@chakra-ui/react';
 
+import { formatDateTime } from '../../utils/dateUtils';
+
 const ChatMessage = ({ msg }) => {
   return (
     <>
@@ -12,7 +14,7 @@ const ChatMessage = ({ msg }) => {
             </Text>
 
             <Text fontSize="12px" color="gray.500">
-              {msg.createdAt}
+              {formatDateTime(msg.createdAt)}
             </Text>
           </HStack>
           <Text fontSize="14px">{msg.content}</Text>
