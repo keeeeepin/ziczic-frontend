@@ -1,3 +1,4 @@
 export const QUERY_KEYS = {
-    WORKSPACES: ['workspaces']
+  WORKSPACES: ['workspaces'],
+  ALL_WORKSPACES: ['workspace'],
 };
