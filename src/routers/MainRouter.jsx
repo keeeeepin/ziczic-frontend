@@ -56,7 +56,17 @@ const MainRouter = () => {
     <Box display={'flex'}>
       <WorkspaceList />
 
-      <VStack align="stretch" spacing={1} bg="#2B2D31" userSelect="none" w="200px" minW="200px">
+      <VStack
+        left="4rem"
+        position="fixed"
+        align="stretch"
+        spacing={1}
+        bg="#2B2D31"
+        userSelect="none"
+        w="200px"
+        minW="200px"
+        h="100vh"
+      >
         {sideBar}
         <UserProfile />
       </VStack>

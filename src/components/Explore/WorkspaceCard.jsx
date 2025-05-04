@@ -32,14 +32,16 @@ const WorkspaceCard = ({ id, workspaceName, createdAt }) => {
         console.log('가입완료');
       })
       .catch((err) => console.log(err));
+
+    onClose();
   };
 
   return (
     <>
       <Box
+        width="30%"
         borderWidth="1px"
         borderRadius="lg"
-        overflow="hidden"
         boxShadow="md"
         bg="white"
         _hover={{ transform: 'translateY(-5px)', boxShadow: 'lg', transition: 'all 0.3s ease' }}
