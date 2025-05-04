@@ -47,7 +47,7 @@ const WorkspaceList = () => {
   };
 
   return (
-    <HStack align="stretch" spacing={0} h="100vh" bg="#19171D">
+    <HStack w="4rem" align="stretch" spacing={0} h="100vh" bg="#19171D" position="fixed">
       <VStack py={3} px={3} spacing={3} align="center">
         {workspaces?.data?.map((workspace) => (
           <Workspace key={workspace.id} id={workspace.id} name={workspace.workspaceName} />
