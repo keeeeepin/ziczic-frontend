@@ -9,14 +9,14 @@ COPY . .
 EXPOSE 3000
 RUN npm run build
 
-FROM nginx:latest
+FROM nginx:alpine
 USER root
-RUN rm /etc/nginx/conf.d/default.conf
-RUN rm -rf /etc/nginx/conf.d/*
+#RUN rm /etc/nginx/conf.d/default.conf
+#RUN rm -rf /etc/nginx/conf.d/*
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d/
+#COPY ./conf/nginx.conf /etc/nginx/conf.d/
 
-COPY --from=builder /fe/dist /usr/share/nginx/html
+COPY --from=build /fe/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
