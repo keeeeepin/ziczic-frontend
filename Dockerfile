@@ -10,6 +10,7 @@ EXPOSE 3000
 RUN npm run build
 
 FROM nginx:latest
+USER root
 RUN rm /etc/nginx/conf.d/default.conf
 RUN rm -rf /etc/nginx/conf.d/*
 
