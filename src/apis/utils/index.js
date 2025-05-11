@@ -1,6 +1,6 @@
 import axios from 'axios';
 // const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8090/api';
-const BASE_URL = 'http://ziczic-be-container:8090/api/';
+const BASE_URL = 'http://172.30.1.2:8090/api/';
 
 const axiosApi = (url, options) => {
   const instance = axios.create({ baseURL: url, ...options });
